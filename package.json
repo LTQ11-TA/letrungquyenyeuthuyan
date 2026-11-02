@@ -1,0 +1,10 @@
+{
+  "name": "Địa điểm lịch sử quanh Hồ Gươm",
+  "version": "1.0.0",
+  "description": "Sản phẩm VR360 những địa điểm lịch sử quanh Hồ Gươm",
+  "main": "main.js",
+  "author": "",
+  "scripts": {
+    "start": "electron ."
+  }
+}

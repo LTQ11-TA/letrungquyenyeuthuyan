@@ -1,0 +1,106 @@
+{
+    "custom_box": "",
+    "custom2_box": "",
+    "custom3_box": "",
+    "custom4_box": null,
+    "custom5_box": null,
+    "location_box": "",
+    "custom_content_rooms": {
+        "9848": {
+            "id": 9848,
+            "custom_content": "",
+            "custom2_content": "",
+            "custom3_content": "",
+            "custom4_content": "",
+            "custom5_content": ""
+        },
+        "9849": {
+            "id": 9849,
+            "custom_content": "",
+            "custom2_content": "",
+            "custom3_content": "",
+            "custom4_content": "",
+            "custom5_content": ""
+        },
+        "9850": {
+            "id": 9850,
+            "custom_content": "",
+            "custom2_content": "",
+            "custom3_content": "",
+            "custom4_content": "",
+            "custom5_content": ""
+        },
+        "9852": {
+            "id": 9852,
+            "custom_content": "",
+            "custom2_content": "",
+            "custom3_content": "",
+            "custom4_content": "",
+            "custom5_content": ""
+        },
+        "9853": {
+            "id": 9853,
+            "custom_content": "",
+            "custom2_content": "",
+            "custom3_content": "",
+            "custom4_content": "",
+            "custom5_content": ""
+        },
+        "9855": {
+            "id": 9855,
+            "custom_content": "",
+            "custom2_content": "",
+            "custom3_content": "",
+            "custom4_content": "",
+            "custom5_content": ""
+        },
+        "9856": {
+            "id": 9856,
+            "custom_content": "",
+            "custom2_content": "",
+            "custom3_content": "",
+            "custom4_content": "",
+            "custom5_content": ""
+        },
+        "9857": {
+            "id": 9857,
+            "custom_content": "",
+            "custom2_content": "",
+            "custom3_content": "",
+            "custom4_content": "",
+            "custom5_content": ""
+        },
+        "9858": {
+            "id": 9858,
+            "custom_content": "",
+            "custom2_content": "",
+            "custom3_content": "",
+            "custom4_content": "",
+            "custom5_content": ""
+        },
+        "9859": {
+            "id": 9859,
+            "custom_content": "",
+            "custom2_content": "",
+            "custom3_content": "",
+            "custom4_content": "",
+            "custom5_content": ""
+        },
+        "9860": {
+            "id": 9860,
+            "custom_content": "",
+            "custom2_content": "",
+            "custom3_content": "",
+            "custom4_content": "",
+            "custom5_content": ""
+        },
+        "9861": {
+            "id": 9861,
+            "custom_content": "",
+            "custom2_content": "",
+            "custom3_content": "",
+            "custom4_content": "",
+            "custom5_content": ""
+        }
+    }
+}

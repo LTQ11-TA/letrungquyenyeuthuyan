@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>72 năm Giải phóng Thủ đô</title>
+<style>
+  * { box-sizing: border-box; }
+  html, body { margin: 0; width: 100%; height: 100%; overflow: hidden; }
+  body { background: #b90e08; }
+  .screen { position: absolute; inset: 0; width: 100%; height: 100%; display: none; overflow: hidden; }
+  .screen.active { display: block; }
+  .screen-bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: fill; user-select: none; pointer-events: none; }
+
+  /* Ba button dùng ảnh PNG đã xóa nền */
+  .image-button {
+    position: absolute; z-index: 5; display: block; border: 0; padding: 0;
+    background: transparent; cursor: pointer; line-height: 0; text-decoration: none;
+    transition: transform .25s ease, filter .25s ease;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .image-button img { display: block; width:70%; height: auto; }
+  .image-button:hover, .image-button:focus-visible {
+    transform: scale(1.06); filter: drop-shadow(0 8px 16px rgba(70,0,0,.32)); outline: none;
+  }
+  .image-button:active { transform: scale(1.02); }
+
+  /* Chỉnh vị trí và kích thước button tại đây */
+  #videoButton { left: 39% ; top: 64%; width: 33%; }
+  #vrButton { left: 25%; top: 52.5%; width: 43%; }
+  #historyButton { right: 9%; top: 53%; width: 43%; }
+
+  .bottom-btn {
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    position: absolute; z-index: 8; bottom: 18px; border: 2px solid rgba(255,244,204,.95);
+    border-radius: 999px; background: linear-gradient(#ffe18b, #fff9e9); color: #c8102e;
+    padding: 12px 23px; min-width: 145px; font-weight: 800;
+    font-size: clamp(13px, 1.1vw, 19px); cursor: pointer;
+    box-shadow: 0 5px 16px rgba(80,0,0,.22); transition: transform .2s ease, box-shadow .2s ease;
+  }
+  .bottom-btn:hover { transform: translateY(-3px); box-shadow: 0 8px 22px rgba(80,0,0,.35); }
+  #toScreen2 { right: 22px; }
+  #toScreen1 { left: 22px; }
+
+  /* Lớp phủ video: nền tối, video nằm giữa màn hình */
+  .video-overlay {
+    display: none; position: fixed; inset: 0; z-index: 50;
+    width: 100vw; height: 100vh; height: 100dvh;
+    padding: 24px; background: rgba(0,0,0,.80);
+    align-items: center; justify-content: center;
+  }
+  .video-overlay.open { display: flex; }
+  .video-modal {
+    position: relative; width: min(1000px, 90vw); height: min(600px, 80vh);
+    background: #000; border: 3px solid #ffe18b; border-radius: 18px;
+    overflow: hidden; box-shadow: 0 0 0 2px rgba(255,249,233,.6), 0 16px 50px rgba(0,0,0,.65);
+  }
+  #videoHolder, #videoHolder iframe, #videoHolder video {
+    display: block; width: 100%; height: 100%; border: 0; margin: 0; background: #000;
+  }
+  #videoHolder video { object-fit: contain; }
+
+  /* Hai trang con: phủ kín màn hình */
+  .page-overlay {
+    display: none; position: fixed; inset: 0; z-index:70;
+    width: 100vw; height: 100vh; height: 100dvh; background: #000; 
+  }
+  .page-overlay.open { display: block; }
+  #pageFrame { display: block; width: 100%; height: 100%; border: 0; margin: 0; background: #fff; }
+/* Nút quay về của trang con: cùng kiểu với nút Quay về ở trang 2. */
+  #pageOverlay #closePage { left: 22px; right: auto; bottom: 18px; top: auto; z-index: 95;}
+
+  .close-btn {
+    position: absolute; z-index: 90; top: 12px; right: 12px;
+    display: flex; align-items: center; justify-content: center;
+    width: 42px; height: 42px; border: 2px solid #ffe18b; border-radius: 50%;
+    background: rgba(120,0,0,.92); color: #fff; font-size: 28px; line-height: 1; cursor: pointer;
+    box-shadow: 0 3px 16px rgba(0,0,0,.4); transition: transform .2s ease, background .2s ease;
+  }
+  .close-btn:hover { transform: scale(1.08); background: #c8102e; }
+
+  @media (max-width: 700px) {
+    #videoButton { left: 22%; top: 57%; width: 56%; }
+    #vrButton { left: 4%; top: 34%; width: 44%; }
+    #historyButton { right: 4%; top: 34%; width: 44%; }
+    .bottom-btn { bottom: 10px; padding: 10px 15px; min-width: auto; }
+    #toScreen2 { right: 10px; } #toScreen1 { left: 10px; }
+    .video-overlay { padding: 12px; }
+    .video-modal { width: 95vw; height: auto; aspect-ratio: 16 / 9; max-height: 75vh; border-radius: 12px; }
+    .close-btn { top: 8px; right: 8px; width: 36px; height: 36px; font-size: 24px; }
+  } #pageOverlay #closePage { left: 10px; bottom: 10px; }
+</style>
+</head>
+<body>
+<main>
+  <section id="screen1" class="screen active" aria-label="Trang mở đầu">
+    <img class="screen-bg" src="trang-1.png" alt="">
+    <button id="videoButton" class="image-button" type="button" aria-label="Xem video" title="Xem video">
+      <img src="10.png" alt="Xem video">
+    </button>
+    <button id="toScreen2" class="bottom-btn" type="button">Tiếp tục →</button>
+  </section>
+
+  <section id="screen2" class="screen" aria-label="Chọn nội dung">
+    <img class="screen-bg" src="trang-2.png" alt="">
+    <button id="vrButton" class="image-button" type="button" aria-label="Mở VR360 Hồ Gươm" title="Mở VR360 Hồ Gươm">
+      <img src="11.png" alt="VR360 Hồ Gươm – Những địa điểm lịch sử">
+    </button>
+    <button id="historyButton" class="image-button" type="button" aria-label="Nhìn về Hồ Gươm" title="Nhìn về Hồ Gươm">
+      <img src="12.png" alt="Nhìn về Hồ Gươm">
+    </button>
+    <button id="toScreen1" class="bottom-btn" type="button">← Quay về</button>
+  </section>
+</main>
+
+<!-- Video mở trong khung giữa màn hình, có viền vàng -->
+<div id="videoOverlay" class="video-overlay" role="dialog" aria-modal="true" aria-label="Xem video">
+  <div class="video-modal">
+    <button id="closeVideo" class="close-btn" type="button" aria-label="Đóng video" title="Đóng video">×</button>
+    <div id="videoHolder"></div>
+  </div>
+</div>
+
+<!-- Hai trang con mở full màn hình trong tab hiện tại -->
+<div id="pageOverlay" class="page-overlay" role="dialog" aria-modal="true" aria-label="Nội dung trang con">
+  <iframe id="pageFrame" title="Nội dung trang"></iframe>
+  <button id="closePage" class="bottom-btn" type="button" aria-label="Đóng trang" title="Đóng / quay về">← Quay về</button>
+</div>
+
+<script>
+  /* =========================================================
+     THAY 3 ĐƯỜNG DẪN MẪU BÊN DƯỚI BẰNG ĐƯỜNG DẪN THẬT:
+     VIDEO_URL: link YouTube, Vimeo hoặc đường dẫn trực tiếp tới file MP4.
+     VR360_URL: link trang VR360 hoặc file HTML cần mở full màn hình.
+     HISTORY_URL: link trang Nhìn về Hồ Gươm hoặc file HTML cần mở full màn hình.
+     Ví dụ file HTML cùng thư mục: "vr360.html"
+     ========================================================= */
+  const VIDEO_URL = "HO GUOM.mp4";
+  const VR360_URL = "index.html";
+  const HISTORY_URL = "het.html";
+
+  const screen1 = document.getElementById("screen1");
+  const screen2 = document.getElementById("screen2");
+  const videoOverlay = document.getElementById("videoOverlay");
+  const videoHolder = document.getElementById("videoHolder");
+  const pageOverlay = document.getElementById("pageOverlay");
+  const pageFrame = document.getElementById("pageFrame");
+
+  function showScreen(number) {
+    screen1.classList.toggle("active", number === 1);
+    screen2.classList.toggle("active", number === 2);
+  }
+  document.getElementById("toScreen2").addEventListener("click", () => showScreen(2));
+  document.getElementById("toScreen1").addEventListener("click", () => showScreen(1));
+
+  function isPlaceholder(url) {
+    return !url || url.startsWith("THAY_LINK_");
+  }
+
+  function getYouTubeId(url) {
+    try {
+      const parsed = new URL(url);
+      if (parsed.hostname.includes("youtu.be")) return parsed.pathname.slice(1).split("/")[0];
+      if (parsed.searchParams.get("v")) return parsed.searchParams.get("v");
+      const match = parsed.pathname.match(/\/(?:embed|shorts)\/([^/?]+)/);
+      return match ? match[1] : null;
+    } catch (error) { return null; }
+  }
+
+  function openVideo() {
+    if (isPlaceholder(VIDEO_URL)) {
+      alert("Bạn hãy thay VIDEO_URL bằng link video thật ở gần cuối file index.html.");
+      return;
+    }
+    videoHolder.innerHTML = "";
+    const isMp4 = /\.mp4($|[?#])/i.test(VIDEO_URL);
+    const isYouTube = /youtube\.com|youtu\.be/i.test(VIDEO_URL);
+    const isVimeo = /vimeo\.com/i.test(VIDEO_URL);
+
+    if (isMp4) {
+      const video = document.createElement("video");
+      video.src = VIDEO_URL;
+      video.controls = true;
+      video.autoplay = true;
+      video.playsInline = true;
+      videoHolder.appendChild(video);
+    } else {
+      let embedUrl = VIDEO_URL;
+      if (isYouTube) {
+        const id = getYouTubeId(VIDEO_URL);
+        if (!id) { alert("Không nhận diện được link YouTube. Hãy kiểm tra VIDEO_URL."); return; }
+        embedUrl = "https://www.youtube.com/embed/" + encodeURIComponent(id) + "?autoplay=1&rel=0";
+      } else if (isVimeo) {
+        const match = VIDEO_URL.match(/vimeo\.com\/(?:video\/)?(\d+)/);
+        if (!match) { alert("Không nhận diện được link Vimeo. Hãy kiểm tra VIDEO_URL."); return; }
+        embedUrl = "https://player.vimeo.com/video/" + match[1] + "?autoplay=1";
+      }
+      const frame = document.createElement("iframe");
+      frame.src = embedUrl;
+      frame.title = "Video";
+      frame.allow = "autoplay; encrypted-media; picture-in-picture; fullscreen";
+      frame.allowFullscreen = true;
+      videoHolder.appendChild(frame);
+    }
+    videoOverlay.classList.add("open");
+  }
+
+  function openPage(url, title) {
+    if (isPlaceholder(url)) {
+      alert("Bạn hãy thay đường dẫn trang con bằng link thật ở gần cuối file index.html.");
+      return;
+    }
+    pageFrame.title = title;
+    pageFrame.src = url;
+    pageOverlay.classList.add("open");
+  }
+
+  function closeVideo() {
+    videoOverlay.classList.remove("open");
+    videoHolder.innerHTML = ""; // Dừng video khi đóng
+  }
+  function closePage() {
+    pageOverlay.classList.remove("open");
+    pageFrame.src = "about:blank";
+  }
+
+  document.getElementById("videoButton").addEventListener("click", openVideo);
+  document.getElementById("vrButton").addEventListener("click", () => openPage(VR360_URL, "VR360 Hồ Gươm"));
+  document.getElementById("historyButton").addEventListener("click", () => openPage(HISTORY_URL, "Nhìn về Hồ Gươm"));
+  document.getElementById("closeVideo").addEventListener("click", closeVideo);
+  document.getElementById("closePage").addEventListener("click", closePage);
+
+  document.addEventListener("keydown", event => {
+    if (event.key === "Escape") {
+      if (pageOverlay.classList.contains("open")) closePage();
+      if (videoOverlay.classList.contains("open")) closeVideo();
+    }
+  });
+</script>
+</body>
+</html>

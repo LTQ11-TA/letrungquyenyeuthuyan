@@ -1,0 +1,38 @@
+{
+    "status": "ok",
+    "maps": [
+        {
+            "id": 474,
+            "id_virtualtour": 1691,
+            "visible": 1,
+            "map_type": "floorplan",
+            "default_view": "street",
+            "map": "map_17915190477676ac86947bb550.png",
+            "point_color": "#cc0000",
+            "point_view_color": "#cc0000",
+            "name": "B\u1ea3n \u0111\u1ed3 c\u00e1c \u0111i\u1ec3m l\u1ecbch s\u1eed quanh H\u1ed3 G\u01b0\u01a1m",
+            "point_size": 10,
+            "point_view_size": 20,
+            "cluster_size": 0,
+            "map_thumb": 1,
+            "width_d": 300,
+            "width_m": 225,
+            "north_degree": 0,
+            "zoom_level": 16,
+            "zoom_to_point": 0,
+            "priority": 0,
+            "info_link": "",
+            "info_type": "blank",
+            "id_room_default": "",
+            "leaflet_street_basemap": "",
+            "leaflet_satellite_basemap": "",
+            "leaflet_street_subdomain": "",
+            "leaflet_street_maxzoom": -1,
+            "leaflet_satellite_subdomain": "",
+            "leaflet_satellite_maxzoom": -1,
+            "map_ratio": 1.3125
+        }
+    ],
+    "map_tour": [],
+    "map_tour_points": []
+}

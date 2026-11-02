@@ -1,0 +1,12 @@
+{
+  "appId": "com.view360.vn.Địađiểmlịchsửquanhhồgươm",
+  "appName": "Địa điểm lịch sử quanh Hồ Gươm",
+  "webDir": "www",
+  "server": {
+    "androidScheme": "https"
+  },
+  "backgroundColor": "#343434",
+  "ios": {
+  	"contentInset":"always"
+  }
+}
